@@ -1,12 +1,16 @@
-def hello_app(env, start_response):
-    body = [
-        '%s=%s' % (key, value) for key, value in env.items()
-    ]
-    body = '\n'.join(body)
+from urlparse import parse_qs
+
+def application(environ, start_response):
+    query = parse_qs(environ['QUERY_STRING'], keep_blank_values=True)
+    body = []
+    for key, value in query.items():
+        for item in value:
+            body.append(key + "=" + item + "\r\n")
+
     status = '200 OK'
-    response_headers = [('Content-Type', 'text/plain'),
-                        ('Content-Length', str(len(body)))
+    headers = [
+        ('Content-Type', 'text/plain')
     ]
 
-    start_response(status, response_headers)
-    return [ body ]
+    start_response(status, headers)
+    return body
