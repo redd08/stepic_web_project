@@ -1,3 +1,4 @@
+#worked_version 1.1.9
 #!/bin/bash
 
 if [ -f /etc/nginx/sites-enabled/default ]; then
@@ -11,3 +12,4 @@ sudo /etc/init.d/nginx restart
 # Gunicorn
 sudo ln -sf /home/box/web/etc/gunicorn.conf /etc/gunicorn.d/test
 sudo /etc/init.d/gunicorn restart
+
